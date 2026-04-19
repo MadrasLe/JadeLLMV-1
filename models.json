@@ -1,0 +1,110 @@
+{
+  "family": {
+    "name": "Jade",
+    "owner": "Madras1",
+    "repository_name": "JadeLLM",
+    "collection_url": "https://huggingface.co/collections/Madras1/jade-v1",
+    "primary_language": "pt-BR",
+    "secondary_languages": [
+      "en"
+    ]
+  },
+  "models": [
+    {
+      "slug": "jade-20b",
+      "display_name": "Jade-20B",
+      "repo_id": "Madras1/Jade-20B",
+      "hf_url": "https://huggingface.co/Madras1/Jade-20B",
+      "official": true,
+      "params_millions": 20914.8,
+      "architecture": "gpt_oss",
+      "base_model": "openai/gpt-oss-20b",
+      "format": "transformers",
+      "updated": "2026-04-06"
+    },
+    {
+      "slug": "jade-14b",
+      "display_name": "Jade-14B",
+      "repo_id": "Madras1/Jade-14B",
+      "hf_url": "https://huggingface.co/Madras1/Jade-14B",
+      "official": true,
+      "params_millions": 14768.3,
+      "architecture": "qwen3",
+      "base_model": "Qwen/Qwen3-14B",
+      "format": "transformers",
+      "updated": "2026-04-08"
+    },
+    {
+      "slug": "jade-72b",
+      "display_name": "Jade72b",
+      "repo_id": "Madras1/Jade72b",
+      "hf_url": "https://huggingface.co/Madras1/Jade72b",
+      "official": true,
+      "params_millions": 72706.2,
+      "architecture": "qwen2",
+      "base_model": "Qwen/Qwen2.5-72B",
+      "format": "transformers",
+      "updated": "2026-03-17"
+    },
+    {
+      "slug": "jade-8b",
+      "display_name": "Jade8b",
+      "repo_id": "Madras1/Jade8b",
+      "hf_url": "https://huggingface.co/Madras1/Jade8b",
+      "official": true,
+      "params_millions": 8190.7,
+      "architecture": "qwen3",
+      "base_model": null,
+      "format": "transformers",
+      "updated": "2026-03-24"
+    },
+    {
+      "slug": "jade-4b",
+      "display_name": "Jade4b",
+      "repo_id": "Madras1/Jade4b",
+      "hf_url": "https://huggingface.co/Madras1/Jade4b",
+      "official": true,
+      "params_millions": 4022.5,
+      "architecture": "qwen3",
+      "base_model": null,
+      "format": "transformers",
+      "updated": "2026-03-25"
+    },
+    {
+      "slug": "jade-1.7b",
+      "display_name": "Jade1.7b",
+      "repo_id": "Madras1/Jade1.7b",
+      "hf_url": "https://huggingface.co/Madras1/Jade1.7b",
+      "official": true,
+      "params_millions": 1720.6,
+      "architecture": "qwen3",
+      "base_model": "Qwen/Qwen3-1.7B",
+      "format": "transformers",
+      "updated": "2026-03-31"
+    },
+    {
+      "slug": "jade-0.6b",
+      "display_name": "Jade0.6b",
+      "repo_id": "Madras1/Jade0.6b",
+      "hf_url": "https://huggingface.co/Madras1/Jade0.6b",
+      "official": true,
+      "params_millions": 596.0,
+      "architecture": "qwen3",
+      "base_model": null,
+      "format": "transformers",
+      "updated": "2026-03-25"
+    },
+    {
+      "slug": "jade-8b-gguf",
+      "display_name": "Jade8b-GGUF",
+      "repo_id": "Madras1/Jade8b-GGUF",
+      "hf_url": "https://huggingface.co/Madras1/Jade8b-GGUF",
+      "official": true,
+      "params_millions": 8190.7,
+      "architecture": null,
+      "base_model": "Madras1/Jade8b",
+      "format": "gguf",
+      "updated": "2026-03-24"
+    }
+  ]
+}
