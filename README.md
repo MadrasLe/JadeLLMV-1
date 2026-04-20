@@ -4,6 +4,15 @@
 ![HF Downloads 30d](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MadrasLe/JadeLLMV-1/main/badges/hf_total_30d.json)
 ![Official Models](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MadrasLe/JadeLLMV-1/main/badges/official_models.json)
 ![Community Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MadrasLe/JadeLLMV-1/main/badges/hf_community_all_time.json)
+![Transformers](https://img.shields.io/badge/🤗_Transformers-compatible-yellow)
+![Unsloth](https://img.shields.io/badge/Unsloth-trained-green)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
+![License](https://img.shields.io/badge/License-Apache_2.0-lightgrey)
+![GGUF](https://img.shields.io/badge/GGUF-available-orange)
+
+
+> Download counts include official Madras1 models and community quantizations from the [Jade-v1 collection] AllTime(https://huggingface.co/collections/Madras1/jade-v1).
+
 
 **JadeLLM** é o repositório público de engenharia e documentação da família Jade — uma linha de modelos de linguagem treinados com foco em **português brasileiro**, persona consistente e tom conversacional natural.
 
