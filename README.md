@@ -129,9 +129,8 @@ JadeLLM/
 ```
 
 ---
+Comparação antes/após SFT;
 
-## Notas
+<img width="934" height="613" alt="jade2" src="https://github.com/user-attachments/assets/99c1f293-0120-4468-8ee1-9e71ee190006" />
 
-- Os badges no topo são atualizados automaticamente todo dia via GitHub Actions.
-- Este repositório documenta o trabalho e mantém os scripts públicos estáveis — não é um dump de todos os experimentos internos.
-- Adicione um arquivo de licença antes de tratar o repo como release público final.
+<img width="922" height="734" alt="jade" src="https://github.com/user-attachments/assets/68e583b5-5c4b-475e-ac43-ebe0517553af" />
