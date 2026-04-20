@@ -1,29 +1,62 @@
 # Jade Models
 
-This file is the narrative companion to [models.json](./models.json).
+Documentação narrativa da linha oficial de modelos da família Jade.
+O registro estruturado com metadados vive em [models.json](./models.json).
 
-## Official family
+---
 
-| Model | Repo | Params | Architecture | Base model | Format |
+## Linha oficial
+
+| Modelo | Repo | Params | Base | Arquitetura | Formato |
 | --- | --- | ---: | --- | --- | --- |
-| Jade-20B | `Madras1/Jade-20B` | 20.9B | `gpt_oss` | `openai/gpt-oss-20b` | Transformers |
-| Jade-14B | `Madras1/Jade-14B` | 14.8B | `qwen3` | `Qwen/Qwen3-14B` | Transformers |
-| Jade72b | `Madras1/Jade72b` | 72.7B | `qwen2` | `Qwen/Qwen2.5-72B` | Transformers |
-| Jade8b | `Madras1/Jade8b` | 8.2B | `qwen3` | not pinned in metadata | Transformers |
-| Jade4b | `Madras1/Jade4b` | 4.0B | `qwen3` | not pinned in metadata | Transformers |
-| Jade1.7b | `Madras1/Jade1.7b` | 1.7B | `qwen3` | `Qwen/Qwen3-1.7B` | Transformers |
-| Jade0.6b | `Madras1/Jade0.6b` | 0.6B | `qwen3` | not pinned in metadata | Transformers |
-| Jade8b-GGUF | `Madras1/Jade8b-GGUF` | 8B | exported variant | Jade8b | GGUF |
+| Jade-20B | [Madras1/Jade-20B](https://huggingface.co/Madras1/Jade-20B) | 20.9B | `openai/gpt-oss-20b` | `gpt_oss` | Transformers |
+| Jade-14B | [Madras1/Jade-14B](https://huggingface.co/Madras1/Jade-14B) | 14.8B | `Qwen/Qwen3-14B` | `qwen3` | Transformers |
+| Jade72b | [Madras1/Jade72b](https://huggingface.co/Madras1/Jade72b) | 72.7B | `Qwen/Qwen2.5-72B` | `qwen2` | Transformers |
+| Jade8b | [Madras1/Jade8b](https://huggingface.co/Madras1/Jade8b) | 8.2B | Qwen3 | `qwen3` | Transformers |
+| Jade4b | [Madras1/Jade4b](https://huggingface.co/Madras1/Jade4b) | 4.0B | Qwen3 | `qwen3` | Transformers |
+| Jade1.7b | [Madras1/Jade1.7b](https://huggingface.co/Madras1/Jade1.7b) | 1.7B | `Qwen/Qwen3-1.7B` | `qwen3` | Transformers |
+| Jade0.6b | [Madras1/Jade0.6b](https://huggingface.co/Madras1/Jade0.6b) | 0.6B | Qwen3 | `qwen3` | Transformers |
+| Jade8b-GGUF | [Madras1/Jade8b-GGUF](https://huggingface.co/Madras1/Jade8b-GGUF) | 8B | Jade8b | GGUF export | GGUF |
 
-## Reading the lineup
+---
 
-One useful way to interpret the family is:
+## Como ler a linha
 
-- `Jade72b` and `Jade-20B` as larger headline releases,
-- `Jade-14B` and `Jade8b` as more balanced mid-range variants,
-- `Jade4b`, `Jade1.7b`, and `Jade0.6b` as smaller deployment-oriented variants,
-- `Jade8b-GGUF` as the local / llama.cpp-style export path.
+A família cobre um espectro deliberado de tamanhos e casos de uso.
 
-## Why keep `models.json`
+**Modelos de cabeça de linha**
 
-The public-facing explanation is in this file, but the structured model list lives in `models.json` so the repository keeps one consistent source of truth for names, links, and metadata.
+`Jade-20B` e `Jade72b` são os modelos de maior capacidade da família. O Jade72b foi o primeiro release da família, construído sobre Qwen2.5-72B. O Jade-20B é o mais recente dos grandes, usando `openai/gpt-oss-20b` como base — uma das primeiras tentativas de fine-tune público desse modelo em português.
+
+**Faixa intermediária**
+
+`Jade-14B` e `Jade8b` equilibram qualidade e custo de inferência. São os mais adequados para quem quer um modelo capaz rodando em hardware razoável.
+
+**Modelos compactos**
+
+`Jade4b`, `Jade1.7b` e `Jade0.6b` são os menores da família. Úteis para hardware limitado, integração em apps móveis, ou cenários onde o custo de memória e latência importa mais que a capacidade máxima. O Jade1.7b em particular tem uma relação qualidade/tamanho surpreendente para PT-BR.
+
+**Formato alternativo**
+
+`Jade8b-GGUF` é o export do Jade8b em formato GGUF para rodar com llama.cpp e ferramentas compatíveis como Ollama e LM Studio. É a porta de entrada para quem quer rodar Jade localmente sem depender de Python ou CUDA.
+
+---
+
+## Comportamento esperado
+
+Todos os modelos da família Jade são treinados com o mesmo objetivo central: **a persona vive nos pesos, não só no prompt**.
+
+Na prática, isso significa que qualquer modelo Jade vai:
+- responder em PT-BR por padrão
+- usar linguagem informal e coloquial quando o prompt pedir isso
+- manter um tom consistente mesmo ao longo de conversas longas
+
+O grau de consistência e qualidade escala com o tamanho do modelo, mas o caráter base é o mesmo.
+
+---
+
+## Por que manter `models.json`
+
+O `models.json` é o source of truth estruturado da linha. Ele alimenta os badges automáticos do repositório e serve como referência centralizada para nomes, repos e metadados de cada modelo.
+
+A narrativa está aqui. Os dados ficam lá.
