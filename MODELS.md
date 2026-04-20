@@ -24,7 +24,7 @@ O registro estruturado com metadados vive em [models.json](./models.json).
 
 A família cobre um espectro deliberado de tamanhos e casos de uso.
 
-**Modelos de cabeça de linha**
+**Modelos**
 
 `Jade-20B` e `Jade72b` são os modelos de maior capacidade da família. O Jade72b foi o primeiro release da família, construído sobre Qwen2.5-72B. O Jade-20B é o mais recente dos grandes, usando `openai/gpt-oss-20b` como base — uma das primeiras tentativas de fine-tune público desse modelo em português.
 
