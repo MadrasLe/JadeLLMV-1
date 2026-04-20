@@ -14,11 +14,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Pull latest changes
-        run: git pull --rebase origin main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -28,9 +23,12 @@ jobs:
       - name: Sync Hugging Face metrics
         run: python sync_hf_metrics.py
 
-      - name: Commit updated metrics
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: sync Hugging Face metrics"
-          file_pattern: badges/*.json hf_metrics_snapshot.json hf_metrics_history.json
-          push_options: "--force-with-lease"
+      - name: Commit and push updated metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add badges/*.json hf_metrics_snapshot.json hf_metrics_history.json
+          git diff --staged --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "chore: sync Hugging Face metrics"
+          git push origin main
