@@ -27,8 +27,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add badges/*.json hf_metrics_snapshot.json hf_metrics_history.json
           git diff --staged --quiet && echo "Nothing to commit" && exit 0
           git commit -m "chore: sync Hugging Face metrics"
-          git push origin main
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            git push origin main && exit 0
+            echo "Push attempt $i failed, retrying..."
+            sleep 3
+          done
+          echo "All push attempts failed"
+          exit 1
