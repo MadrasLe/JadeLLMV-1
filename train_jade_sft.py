@@ -39,6 +39,7 @@ DEFAULT_TARGET_MODULES = (
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train a Jade model with Unsloth SFT.")
     parser.add_argument("--datasets", nargs="+", required=True, help="One or more JSONL paths or globs")
+    parser.add_argument("--eval-datasets", nargs="+", default=None, help="Optional JSONL paths or globs for evaluation")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="Base model name")
     parser.add_argument("--output", default=DEFAULT_OUTPUT, help="Output directory")
     parser.add_argument("--adapter", choices=["lora", "dora", "full"], default="lora")
@@ -53,6 +54,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume", action="store_true", help="Resume from the latest checkpoint in the output dir")
     parser.add_argument("--save-steps", type=int, default=200)
     parser.add_argument("--save-total-limit", type=int, default=3)
+    parser.add_argument("--eval-split", type=float, default=0.0, help="Hold out this fraction from train data when no eval dataset is provided")
+    parser.add_argument("--eval-strategy", choices=["steps", "epoch"], default="steps", help="How often to run evaluation when eval is enabled")
+    parser.add_argument("--eval-steps", type=int, default=100, help="Evaluation cadence in steps when using step-based eval")
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
 
@@ -130,15 +134,15 @@ def normalize_messages(item: dict) -> dict | None:
     return None
 
 
-def load_training_dataset(dataset_paths: list[Path]) -> Dataset:
+def load_training_dataset(dataset_paths: list[Path], split_name: str = "train") -> Dataset:
     raw_items: list[dict] = []
     for path in dataset_paths:
         loaded = load_jsonl(path)
-        print(f"[data] {path.name}: {len(loaded)} raw examples")
+        print(f"[data:{split_name}] {path.name}: {len(loaded)} raw examples")
         raw_items.extend(loaded)
 
     if not raw_items:
-        raise ValueError("no training examples were loaded")
+        raise ValueError(f"no {split_name} examples were loaded")
 
     normalized: list[dict] = []
     skipped = 0
@@ -152,11 +156,11 @@ def load_training_dataset(dataset_paths: list[Path]) -> Dataset:
     if not normalized:
         raise ValueError("all examples were invalid after normalization")
 
-    print(f"[data] valid examples: {len(normalized)}")
+    print(f"[data:{split_name}] valid examples: {len(normalized)}")
     if skipped:
-        print(f"[data] skipped examples: {skipped}")
+        print(f"[data:{split_name}] skipped examples: {skipped}")
 
-    print("[data] sample conversation:")
+    print(f"[data:{split_name}] sample conversation:")
     for message in normalized[0]["messages"]:
         preview = message["content"].replace("\n", " ")[:100]
         print(f"  - {message['role']}: {preview}...")
@@ -215,7 +219,7 @@ def load_model(args: argparse.Namespace, FastLanguageModel, torch):
     return model, tokenizer
 
 
-def apply_chat_template(dataset: Dataset, tokenizer, get_chat_template):
+def apply_chat_template(dataset: Dataset, tokenizer, get_chat_template, split_name: str):
     tokenizer = get_chat_template(tokenizer, chat_template="chatml")
 
     def format_examples(batch):
@@ -227,14 +231,14 @@ def apply_chat_template(dataset: Dataset, tokenizer, get_chat_template):
 
     formatted_dataset = dataset.map(format_examples, batched=True)
     lengths = [len(text) for text in formatted_dataset["text"]]
-    print(f"[data] avg chars: {sum(lengths) // len(lengths):,}")
-    print(f"[data] min chars: {min(lengths):,}")
-    print(f"[data] max chars: {max(lengths):,}")
+    print(f"[data:{split_name}] avg chars: {sum(lengths) // len(lengths):,}")
+    print(f"[data:{split_name}] min chars: {min(lengths):,}")
+    print(f"[data:{split_name}] max chars: {max(lengths):,}")
     return formatted_dataset, tokenizer
 
 
-def build_training_args(args: argparse.Namespace, TrainingArguments, torch):
-    return TrainingArguments(
+def build_training_args(args: argparse.Namespace, TrainingArguments, torch, has_eval: bool):
+    training_kwargs = dict(
         output_dir=args.output,
         per_device_train_batch_size=args.batch_size,
         gradient_accumulation_steps=args.gradient_accumulation,
@@ -253,6 +257,14 @@ def build_training_args(args: argparse.Namespace, TrainingArguments, torch):
         seed=args.seed,
         report_to="none",
     )
+    if has_eval:
+        training_kwargs["evaluation_strategy"] = args.eval_strategy
+        training_kwargs["per_device_eval_batch_size"] = args.batch_size
+        if args.eval_strategy == "steps":
+            training_kwargs["eval_steps"] = args.eval_steps
+    else:
+        training_kwargs["evaluation_strategy"] = "no"
+    return TrainingArguments(**training_kwargs)
 
 
 def find_resume_checkpoint(output_dir: Path) -> str | None:
@@ -327,12 +339,22 @@ def push_training_output(args: argparse.Namespace, model, tokenizer, torch):
         tokenizer.push_to_hub(args.push_to_hub)
 
 
-def print_summary(args: argparse.Namespace, trainer_stats, dataset_size: int):
+def print_summary(
+    args: argparse.Namespace,
+    trainer_stats,
+    train_dataset_size: int,
+    eval_dataset_size: int | None = None,
+    eval_metrics: dict | None = None,
+):
     print_section("Training complete")
     print(f"[result] output: {args.output}")
     print(f"[result] train runtime: {trainer_stats.metrics['train_runtime']:.1f}s")
     print(f"[result] train loss: {trainer_stats.metrics['train_loss']:.4f}")
-    print(f"[result] dataset size: {dataset_size}")
+    print(f"[result] train dataset size: {train_dataset_size}")
+    if eval_dataset_size is not None:
+        print(f"[result] eval dataset size: {eval_dataset_size}")
+    if eval_metrics and "eval_loss" in eval_metrics:
+        print(f"[result] eval loss: {eval_metrics['eval_loss']:.4f}")
     if args.save_merged:
         print(f"[result] merged output: {args.output}-merged")
     if args.push_to_hub:
@@ -349,21 +371,43 @@ def main():
     print(f"[config] batch: {args.batch_size} x {args.gradient_accumulation}")
     print(f"[config] max_seq_length: {args.max_seq_length}")
     print(f"[config] output: {args.output}")
+    if args.eval_datasets:
+        print(f"[config] eval datasets: {len(args.eval_datasets)} pattern(s)")
+    elif args.eval_split > 0:
+        print(f"[config] eval split: {args.eval_split:.2%}")
 
     dataset_paths = expand_dataset_patterns(args.datasets)
     if not dataset_paths:
         raise SystemExit("no dataset files were found")
 
-    dataset = load_training_dataset(dataset_paths)
+    train_dataset = load_training_dataset(dataset_paths, split_name="train")
+    eval_dataset = None
+
+    if args.eval_datasets:
+        eval_dataset_paths = expand_dataset_patterns(args.eval_datasets)
+        if not eval_dataset_paths:
+            raise SystemExit("eval dataset patterns were provided but no files were found")
+        eval_dataset = load_training_dataset(eval_dataset_paths, split_name="eval")
+    elif args.eval_split > 0:
+        if not 0 < args.eval_split < 1:
+            raise SystemExit("--eval-split must be between 0 and 1")
+        split = train_dataset.train_test_split(test_size=args.eval_split, seed=args.seed, shuffle=True)
+        train_dataset = split["train"]
+        eval_dataset = split["test"]
+        print(f"[data] split train/eval automatically: {len(train_dataset)} train / {len(eval_dataset)} eval")
+
     FastLanguageModel, get_chat_template, TrainingArguments, SFTTrainer, torch = import_training_stack()
     model, tokenizer = load_model(args, FastLanguageModel, torch)
-    dataset, tokenizer = apply_chat_template(dataset, tokenizer, get_chat_template)
+    train_dataset, tokenizer = apply_chat_template(train_dataset, tokenizer, get_chat_template, split_name="train")
+    if eval_dataset is not None:
+        eval_dataset, tokenizer = apply_chat_template(eval_dataset, tokenizer, get_chat_template, split_name="eval")
 
-    training_args = build_training_args(args, TrainingArguments, torch)
+    training_args = build_training_args(args, TrainingArguments, torch, has_eval=eval_dataset is not None)
     trainer = SFTTrainer(
         model=model,
         tokenizer=tokenizer,
-        train_dataset=dataset,
+        train_dataset=train_dataset,
+        eval_dataset=eval_dataset,
         dataset_text_field="text",
         max_seq_length=args.max_seq_length,
         args=training_args,
@@ -375,9 +419,16 @@ def main():
 
     print_section("Training")
     trainer_stats = trainer.train(resume_from_checkpoint=resume_checkpoint)
+    eval_metrics = trainer.evaluate() if eval_dataset is not None else None
     save_adapter(Path(args.output), model, tokenizer)
     push_training_output(args, model, tokenizer, torch)
-    print_summary(args, trainer_stats, len(dataset))
+    print_summary(
+        args,
+        trainer_stats,
+        len(train_dataset),
+        eval_dataset_size=len(eval_dataset) if eval_dataset is not None else None,
+        eval_metrics=eval_metrics,
+    )
 
 
 if __name__ == "__main__":
