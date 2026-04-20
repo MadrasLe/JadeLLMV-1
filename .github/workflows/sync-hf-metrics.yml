@@ -1,0 +1,30 @@
+name: Sync HF Metrics
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 8 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync Hugging Face metrics
+        run: python sync_hf_metrics.py
+
+      - name: Commit updated metrics
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: sync Hugging Face metrics"
+          file_pattern: badges/*.json hf_metrics_snapshot.json hf_metrics_history.json
