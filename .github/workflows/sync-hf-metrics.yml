@@ -14,6 +14,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Pull latest changes
+        run: git pull --rebase origin main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -28,3 +33,4 @@ jobs:
         with:
           commit_message: "chore: sync Hugging Face metrics"
           file_pattern: badges/*.json hf_metrics_snapshot.json hf_metrics_history.json
+          push_options: "--force-with-lease"
