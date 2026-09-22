@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-09-21T15:08:23+00:00",
+  "generated_at": "2026-09-22T13:26:50+00:00",
   "family": "Jade",
   "owner": "Madras1",
   "official_model_count": 9,
   "community_model_count": 9,
   "totals": {
-    "downloads_30d": 4426,
-    "downloads_all_time": 38427
+    "downloads_30d": 4441,
+    "downloads_all_time": 38490
   },
   "official_totals": {
-    "downloads_30d": 325,
-    "downloads_all_time": 8626
+    "downloads_30d": 320,
+    "downloads_all_time": 8631
   },
   "community_totals": {
-    "downloads_30d": 4101,
-    "downloads_all_time": 29801
+    "downloads_30d": 4121,
+    "downloads_all_time": 29859
   },
   "official_models": [
     {
@@ -22,8 +22,8 @@
       "display_name": "Jade-20B",
       "repo_id": "Madras1/Jade-20B",
       "hf_url": "https://huggingface.co/Madras1/Jade-20B",
-      "downloads_30d": 21,
-      "downloads_all_time": 1383
+      "downloads_30d": 24,
+      "downloads_all_time": 1386
     },
     {
       "slug": "jade-14b",
@@ -78,8 +78,8 @@
       "display_name": "Jade8b-GGUF",
       "repo_id": "Madras1/Jade8b-GGUF",
       "hf_url": "https://huggingface.co/Madras1/Jade8b-GGUF",
-      "downloads_30d": 104,
-      "downloads_all_time": 633
+      "downloads_30d": 96,
+      "downloads_all_time": 635
     },
     {
       "slug": "jade-tinygpt-ptbr",
@@ -96,31 +96,31 @@
       "display_name": "Jade-20B-i1-GGUF",
       "repo_id": "mradermacher/Jade-20B-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-20B-i1-GGUF",
-      "downloads_30d": 886,
-      "downloads_all_time": 9355
+      "downloads_30d": 906,
+      "downloads_all_time": 9379
     },
     {
       "slug": "jade-20b-gguf",
       "display_name": "Jade-20B-GGUF",
       "repo_id": "mradermacher/Jade-20B-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-20B-GGUF",
-      "downloads_30d": 368,
-      "downloads_all_time": 3967
+      "downloads_30d": 374,
+      "downloads_all_time": 3978
     },
     {
       "slug": "jade-14b-i1-gguf",
       "display_name": "Jade-14B-i1-GGUF",
       "repo_id": "mradermacher/Jade-14B-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-14B-i1-GGUF",
-      "downloads_30d": 736,
-      "downloads_all_time": 5376
+      "downloads_30d": 746,
+      "downloads_all_time": 5388
     },
     {
       "slug": "jade-14b-gguf",
       "display_name": "Jade-14B-GGUF",
       "repo_id": "mradermacher/Jade-14B-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-14B-GGUF",
-      "downloads_30d": 272,
+      "downloads_30d": 267,
       "downloads_all_time": 1647
     },
     {
@@ -128,15 +128,15 @@
       "display_name": "Jade4b-i1-GGUF",
       "repo_id": "mradermacher/Jade4b-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade4b-i1-GGUF",
-      "downloads_30d": 520,
-      "downloads_all_time": 2903
+      "downloads_30d": 515,
+      "downloads_all_time": 2905
     },
     {
       "slug": "jade-4b-gguf",
       "display_name": "Jade4b-GGUF",
       "repo_id": "mradermacher/Jade4b-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade4b-GGUF",
-      "downloads_30d": 387,
+      "downloads_30d": 385,
       "downloads_all_time": 1123
     },
     {
@@ -145,22 +145,22 @@
       "repo_id": "mradermacher/Jade1.7b-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade1.7b-i1-GGUF",
       "downloads_30d": 581,
-      "downloads_all_time": 3257
+      "downloads_all_time": 3264
     },
     {
       "slug": "jade-1.7b-gguf",
       "display_name": "Jade1.7b-GGUF",
       "repo_id": "mradermacher/Jade1.7b-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade1.7b-GGUF",
-      "downloads_30d": 177,
-      "downloads_all_time": 990
+      "downloads_30d": 176,
+      "downloads_all_time": 992
     },
     {
       "slug": "jade-0.6b-gguf",
       "display_name": "Jade0.6b-GGUF",
       "repo_id": "mradermacher/Jade0.6b-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade0.6b-GGUF",
-      "downloads_30d": 174,
+      "downloads_30d": 171,
       "downloads_all_time": 1183
     }
   ]
