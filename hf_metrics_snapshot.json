@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-09-24T13:35:14+00:00",
+  "generated_at": "2026-09-25T13:53:25+00:00",
   "family": "Jade",
   "owner": "Madras1",
   "official_model_count": 9,
   "community_model_count": 9,
   "totals": {
-    "downloads_30d": 4541,
-    "downloads_all_time": 38691
+    "downloads_30d": 4574,
+    "downloads_all_time": 38760
   },
   "official_totals": {
-    "downloads_30d": 326,
+    "downloads_30d": 325,
     "downloads_all_time": 8649
   },
   "community_totals": {
-    "downloads_30d": 4215,
-    "downloads_all_time": 30042
+    "downloads_30d": 4249,
+    "downloads_all_time": 30111
   },
   "official_models": [
     {
@@ -78,7 +78,7 @@
       "display_name": "Jade8b-GGUF",
       "repo_id": "Madras1/Jade8b-GGUF",
       "hf_url": "https://huggingface.co/Madras1/Jade8b-GGUF",
-      "downloads_30d": 95,
+      "downloads_30d": 94,
       "downloads_all_time": 645
     },
     {
@@ -96,31 +96,31 @@
       "display_name": "Jade-20B-i1-GGUF",
       "repo_id": "mradermacher/Jade-20B-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-20B-i1-GGUF",
-      "downloads_30d": 962,
-      "downloads_all_time": 9445
+      "downloads_30d": 966,
+      "downloads_all_time": 9454
     },
     {
       "slug": "jade-20b-gguf",
       "display_name": "Jade-20B-GGUF",
       "repo_id": "mradermacher/Jade-20B-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-20B-GGUF",
-      "downloads_30d": 394,
-      "downloads_all_time": 4008
+      "downloads_30d": 385,
+      "downloads_all_time": 4011
     },
     {
       "slug": "jade-14b-i1-gguf",
       "display_name": "Jade-14B-i1-GGUF",
       "repo_id": "mradermacher/Jade-14B-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-14B-i1-GGUF",
-      "downloads_30d": 747,
-      "downloads_all_time": 5400
+      "downloads_30d": 756,
+      "downloads_all_time": 5413
     },
     {
       "slug": "jade-14b-gguf",
       "display_name": "Jade-14B-GGUF",
       "repo_id": "mradermacher/Jade-14B-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade-14B-GGUF",
-      "downloads_30d": 272,
+      "downloads_30d": 271,
       "downloads_all_time": 1659
     },
     {
@@ -128,7 +128,7 @@
       "display_name": "Jade4b-i1-GGUF",
       "repo_id": "mradermacher/Jade4b-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade4b-i1-GGUF",
-      "downloads_30d": 474,
+      "downloads_30d": 471,
       "downloads_all_time": 2908
     },
     {
@@ -136,7 +136,7 @@
       "display_name": "Jade4b-GGUF",
       "repo_id": "mradermacher/Jade4b-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade4b-GGUF",
-      "downloads_30d": 390,
+      "downloads_30d": 388,
       "downloads_all_time": 1128
     },
     {
@@ -144,16 +144,16 @@
       "display_name": "Jade1.7b-i1-GGUF",
       "repo_id": "mradermacher/Jade1.7b-i1-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade1.7b-i1-GGUF",
-      "downloads_30d": 621,
-      "downloads_all_time": 3305
+      "downloads_30d": 649,
+      "downloads_all_time": 3340
     },
     {
       "slug": "jade-1.7b-gguf",
       "display_name": "Jade1.7b-GGUF",
       "repo_id": "mradermacher/Jade1.7b-GGUF",
       "hf_url": "https://huggingface.co/mradermacher/Jade1.7b-GGUF",
-      "downloads_30d": 184,
-      "downloads_all_time": 1004
+      "downloads_30d": 192,
+      "downloads_all_time": 1013
     },
     {
       "slug": "jade-0.6b-gguf",
